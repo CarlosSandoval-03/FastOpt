@@ -95,7 +95,37 @@ def compare_stack_pop(n):
     time_lists.append(end-start)
     return time_lists
 
-print(compare_stack_pop(10000))
+#Comparacion Cola Enlazado y ordinaria
+def compare_queue_enqueue(n):
+    time_lists = []
+    time_lists.append(n)
+    start = perf_counter()
+    for i in range(n): queue.enqueue(i)
+    end = perf_counter()
+    time_lists.append(end-start)
+    start = perf_counter()
+    for i in range(n): linkedQueue.enqueue(i)
+    end = perf_counter()
+    time_lists.append(end-start)
+    return time_lists
 
 
-    
+
+def compare_queue_dequeue(n):
+    time_lists = []
+    time_lists.append(n)
+    for i in range(n): 
+        queue.enqueue(i)
+        linkedQueue.enqueue(i)
+    start = perf_counter()
+    for i in range(n): queue.dequeue()
+    end = perf_counter()
+    time_lists.append(end-start)
+    start = perf_counter()
+    for i in range(n): linkedQueue.dequeue()
+    end = perf_counter()
+    time_lists.append(end-start)
+    return time_lists
+
+
+print(compare_queue_dequeue(10000))

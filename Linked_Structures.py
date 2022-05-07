@@ -21,7 +21,30 @@ class LinkedList:
     def is_empty(self):
         #Verifica que la lista este vacía según el tamaño definido en size y la existencia de un objeto nodo en la referencia head 
         return self.head is None and self.size==0
-        
+
+    def inserts(self,data,index):
+        new_node = Node(data)
+        #Se verifica que la lista este vacía
+        if self.is_empty():
+            print('Empty Structure - Inserting in position 0')
+            self.append(data)
+            self.size=1
+        #Verifica que el índice ingresado no sea mayor a la cantidad de elementos en la lista
+        elif index>=self.size:
+            print('Index out of Boundaries')
+        else:
+            #Crea un nodo temporal para recorrer
+            temp = self.head
+            previous = None
+            after = None
+            #Se recorre la lista hasta el índice requerido
+            for i in range(index):
+                previous = temp
+                if temp.next is not None: temp=temp.next
+            previous.next = new_node
+            new_node.next = temp
+            self.size+=1
+
     def size(self):
         #Retorna el tamaño de la lista (Cantidad de elementos enlazados)
         return self.size
@@ -88,6 +111,24 @@ class LinkedList:
         #Imprime la cadena con la información
         print(string+']')
 
+    def pop(self):
+        #Se verifica que la lista este vacía
+        if self.is_empty():
+            print('No elements to pop')
+        #Verifica que el índice ingresado no sea mayor a la cantidad de elementos en la lista
+        else:
+            #Crea un nodo temporal para recorrer
+            temp=self.head
+            #Se recorre la lista hasta penúltimo elemento
+            for i in range(self.size-1):
+                if temp.next is not None: temp=temp.next
+            aux = temp.next
+            #Se elimina último elemento
+            temp.next = None
+            del aux            
+            #Se retorna el valor guardado en el nodo de la posición   
+            
+
 #La clase LinkedQueue hereda atributos y métodos de la clase LinkedList
 class LinkedQueue(LinkedList):
 
@@ -96,6 +137,14 @@ class LinkedQueue(LinkedList):
         super().__init__()
         #Se inicializa un atributo adicional end
         self.end = None
+
+    def rear(self):
+       #Se verifica que la LinkedQueue este vacía
+        if self.is_empty():
+            print('No rear element')
+        else:
+            #Se retorna el primer elememnto que se encolo en la LinkedQueue
+            return self.end.get_var() 
 
     def is_empty(self):
         #Verifica que la LinkedQueue este vacía según el tamaño definido en size y la existencia de un objeto nodo en la referencia head y end

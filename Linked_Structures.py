@@ -111,6 +111,10 @@ class LinkedList:
         #Imprime la cadena con la información
         print(string+']')
 
+    def clear(self):
+        self.head = None
+        self.size = 0
+
     def pop(self):
         #Se verifica que la lista este vacía
         if self.is_empty():
@@ -123,11 +127,59 @@ class LinkedList:
             for i in range(self.size-1):
                 if temp.next is not None: temp=temp.next
             aux = temp.next
+            value = aux.get_var()
             #Se elimina último elemento
             temp.next = None
-            del aux            
-            #Se retorna el valor guardado en el nodo de la posición   
-            
+            del aux         
+            #Se retorna el valor guardado en el nodo de la posición
+            return value
+
+    def min(self):
+        temp=self.head
+        retvalue = temp.get_var()
+        while(temp!=None):
+            if retvalue>temp.get_var(): retvalue=temp.get_var()
+            temp=temp.next
+        return retvalue
+
+    def max(self):
+        temp=self.head
+        retvalue = temp.get_var()
+        while(temp!=None):
+            if retvalue<temp.get_var(): retvalue=temp.get_var()
+            temp=temp.next
+        return retvalue
+
+    #Adaptación Counting Sort
+    def sort(self,bool):
+        #Se verifica que la lista este vacía
+        if self.is_empty():
+            print('No elements to sort')
+        else:
+            #Se plantea intervalo desde el valor minimo y el maximo de la lista
+            minval = self.min()
+            interval = self.max()-minval
+            #Se crea arreglo del tamaño del intervalo hallado +1
+            l = [0]*(interval+1)
+            temp=self.head
+            #Se cuentan cuantos elementos hay de cada valor en la lista deordenada
+            #y se ingresa información al arreglo de conteo
+            while(temp!=None):
+                l[temp.get_var()-minval]+=1
+                temp=temp.next
+            #Se limpia la lista
+            self.clear()
+            #Se llena la lista de acuerdo a la frecuencia y elemento que se ingresa de menor al mayor
+            loc = 0
+            while loc<=interval:
+                if l[loc]!=0:
+                    self.append(loc+minval)
+                    l[loc]-=1
+                else:
+                    loc+=1
+            #Se elimina arreglo de conteo
+            del l
+
 
 #La clase LinkedQueue hereda atributos y métodos de la clase LinkedList
 class LinkedQueue(LinkedList):
@@ -233,6 +285,7 @@ class LinkedStack(LinkedList):
         if (self.is_empty()):
             print("No elements to pop")
         else:
+            val = self.top()
             if(self.size==1):
                 #Se desapila partiendo de que la LinkedStack tenga un único elemento
                 self.end=None
@@ -251,3 +304,5 @@ class LinkedStack(LinkedList):
                 del aux
             #Se reduce en uno el tamaño de la LinkedStack
             self.size-=1
+            return val
+

@@ -18,6 +18,9 @@ class Queue:
     def rear(self):
         return self.elements[len(self.elements)-1]
 
+    def index(self,i):
+        return self.elements[i]
+
 class Stack:
 
     def __init__(self):
@@ -37,3 +40,6 @@ class Stack:
 
     def top(self):
         return self.elements[-1]
+
+    def index(self,i):
+        return self.elements[i]

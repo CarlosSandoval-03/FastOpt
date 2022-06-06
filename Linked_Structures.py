@@ -127,7 +127,8 @@ class LinkedList:
             for i in range(self.size-1):
                 if temp.next is not None: temp=temp.next
             aux = temp.next
-            value = aux.get_var()
+            value = 0
+            if aux: value = aux.get_var()
             #Se elimina último elemento
             temp.next = None
             del aux         

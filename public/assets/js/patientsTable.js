@@ -1,17 +1,5 @@
-const deleteDoctor = (id) => {
-	let directorioDoctores = JSON.parse(localStorage.getItem("doctores"));
-
-	let i = Object.keys(directorioDoctores).length - 1 - id;
-
-	delete directorioDoctores[i];
-
-	localStorage.setItem("doctores", JSON.stringify(directorioDoctores));
-	console.log("Actualizando directorio de doctores");
-
-	listaDoctores.pop();
-};
-
-const createActions = (id) => {
+// La funcion se repite en doctorsTable (refactorizar)
+function createActions() {
 	let tdActtions = document.createElement("td");
 	tdActtions.classList.add("text-center");
 	tdActtions.classList.add("align-middle");
@@ -54,7 +42,7 @@ const createActions = (id) => {
 	action2.appendChild(icon2);
 
 	// ACTION 3
-	let action3 = document.createElement("button");
+	let action3 = document.createElement("a");
 	action3.classList.add("btn");
 	action3.classList.add("btnMaterial");
 	action3.classList.add("btn-flat");
@@ -62,7 +50,7 @@ const createActions = (id) => {
 	action3.classList.add("btnNoBorders");
 	action3.classList.add("checkboxHover");
 	action3.style.marginLeft = "5px";
-	// action3.onclick = deleteDoctor(id);
+	action3.role = "button";
 
 	action3.href = "#";
 
@@ -80,40 +68,51 @@ const createActions = (id) => {
 	tdActtions.appendChild(action3);
 
 	return tdActtions;
-};
+}
 
-const tabla = document.getElementById("cuerpoTablaDoctores");
-
-let doctor = listaDoctores.head;
+const tabla = document.getElementById("cuerpoTablaPacientes");
+let paciente = listaPacientes.head;
 let i = 0;
 
-while (doctor !== null) {
+while (paciente !== null) {
 	let tr = document.createElement("tr");
 	let tdID = document.createElement("td");
 	let tdFirstName = document.createElement("td");
 	let tdLastName = document.createElement("td");
-	let tdSpecialty = document.createElement("td");
-	let tdEmail = document.createElement("td");
+	let tdDob = document.createElement("td");
+	let tdNacionalidad = document.createElement("td");
+	let tdNumId = document.createElement("td");
+	let tdMail = document.createElement("td");
+	let tdPhone = document.createElement("td");
 	let tdState = document.createElement("td");
-	let tdActtions = createActions(i);
 
 	tdID.innerHTML = i;
-	tdFirstName.innerHTML = doctor.data.nombre;
-	tdLastName.innerHTML = doctor.data.apellido;
-	tdSpecialty.innerHTML = doctor.data.especialidad;
+	tdFirstName.innerHTML = paciente.data.nombre;
+	tdLastName.innerHTML = paciente.data.apellido;
+
+	let fecha = new Date(paciente.data.fechaNacimiento);
+	tdDob.innerHTML = fecha.toISOString().split("T")[0];
+
+	tdNacionalidad.innerHTML = paciente.data.nacionalidad;
+	tdNumId.innerHTML = paciente.data.numDocumento || "NO REGISTRA";
+
+	tdMail.innerHTML = paciente.data.mail || "NO REGISTRA";
+	tdPhone.innerHTML = paciente.data.telefono;
 	tdState.innerHTML = "Activo";
-	tdEmail.innerHTML = doctor.data.mail;
 
 	tr.appendChild(tdID);
 	tr.appendChild(tdFirstName);
 	tr.appendChild(tdLastName);
-	tr.appendChild(tdSpecialty);
-	tr.appendChild(tdEmail);
+	tr.appendChild(tdDob);
+	tr.appendChild(tdNacionalidad);
+	tr.appendChild(tdNumId);
+	tr.appendChild(tdMail);
+	tr.appendChild(tdPhone);
 	tr.appendChild(tdState);
-	tr.appendChild(tdActtions);
+	tr.appendChild(createActions());
 
 	tabla.appendChild(tr);
 
-	doctor = doctor.next;
+	paciente = paciente.next;
 	i++;
 }

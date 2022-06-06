@@ -13,10 +13,8 @@ const generarDoctor = () => {
 
 	let directorioDoctores = JSON.parse(localStorage.getItem("doctores"));
 
-	let id = 0;
-	for (let i in directorioDoctores) {
-		id++;
-	}
+	let keys = Object.keys(directorioDoctores);
+	let id = keys[keys.length - 1] + 1;
 
 	directorioDoctores[id] = newDoctor;
 

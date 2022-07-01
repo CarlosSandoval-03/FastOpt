@@ -97,7 +97,7 @@ class LinkedList:
             #Se retorna el valor guardado en el nodo de la posición   
             return temp.get_var()
         
-    def print(self):
+    def __str__(self):
         #Crea una cadena que mantiene la siguiente estructura:
         #[elemento1, elemento2, elemento3, ... ,elementon]
         #Donde n es la cantidad de elementos guardados en la estructura
@@ -109,7 +109,7 @@ class LinkedList:
                 string+=', '
             temp=temp.next
         #Imprime la cadena con la información
-        print(string+']')
+        return string+']'
 
     def clear(self):
         self.head = None
@@ -124,11 +124,10 @@ class LinkedList:
             #Crea un nodo temporal para recorrer
             temp=self.head
             #Se recorre la lista hasta penúltimo elemento
-            for i in range(self.size-1):
-                if temp.next is not None: temp=temp.next
+            while temp.next.next is not None:
+                temp=temp.next
             aux = temp.next
-            value = 0
-            if aux: value = aux.get_var()
+            value = temp.next.get_var()
             #Se elimina último elemento
             temp.next = None
             del aux         
@@ -152,7 +151,7 @@ class LinkedList:
         return retvalue
 
     #Adaptación Counting Sort
-    def sort(self,bool):
+    def sort(self):
         #Se verifica que la lista este vacía
         if self.is_empty():
             print('No elements to sort')
@@ -180,7 +179,6 @@ class LinkedList:
                     loc+=1
             #Se elimina arreglo de conteo
             del l
-
 
 #La clase LinkedQueue hereda atributos y métodos de la clase LinkedList
 class LinkedQueue(LinkedList):
